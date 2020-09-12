@@ -1,0 +1,2 @@
+export DOTFILES=~/src/dotfiles
+source ${DOTFILES}/zsh/*.zsh

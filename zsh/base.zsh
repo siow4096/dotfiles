@@ -1,0 +1,202 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Path to your oh-my-zsh installation.
+export ZSH="/home/nsiow/.oh-my-zsh"
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(aws git z)
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="robbyrussell"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Source directory
+mkdir -p ~/src
+alias src='cd ~/src'
+
+# i3 aliases
+alias lock='i3lock -c000000'
+alias go2sleep='i3lock -c000000 && systemctl suspend'
+alias nosleep='xset s off && xset -dpms'
+
+# Handling profiles
+alias ep='vim ~/.zshrc'
+alias sp='source ~/.zshrc'
+
+# Copy/Paste
+alias c='xclip -selection clipboard'
+alias p='xclip -selection clipboard -o'
+
+# Python -> JS is useful
+alias py2js='python3 -c "import ast, json, sys; print(json.dumps(ast.literal_eval(sys.stdin.read())))" | jq .'
+
+# Golang
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:~/go/bin
+
+# Netflix -----------------------------
+alias hf='git hf'
+alias flip='cfn-flip'
+alias vpn-up='nmcli con up id lt.ovpn.netflix.net.201908 && newt vpn-check'
+alias vpn-down='nmcli con down id lt.ovpn.netflix.net.201908'
+alias vpn-status='nmcli connection show --active | grep lt.ovpn.netflix.net.201908'
+alias weep-network='sudo iptables-restore < ~/src/nflx/weep/weep-iptables.txt'
+eval "$(NEWT_OFFLINE=1 NEWT_QUIET=1 newt --completion-script-zsh)"
+function ngo {
+    xdg-open http://go.netflix.com/$1
+}
+function jira {
+    xdg-open https://jira.netflix.net/browse/$1
+}
+function acro {
+    egrep -i "^\\w+$1" ~/.netflix/acronyms
+}
+function awscreds {
+    if [[ $# -ne 1 ]]; then
+        echo "usage: awscreds [list|ROLENAME]"
+    else
+        if [[ "$1" == "list" ]]; then
+            newt --app-type awscreds roles
+        else
+            newt --app-type awscreds refresh -r $1 $1
+        fi
+    fi
+}
+function export_awscreds {
+   eval $(newt --app-type awscreds export -r $1)
+}
+# Netflix -----------------------------
+
+# virtualenvwrapper
+export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV=true
+export WORKON_HOME=~/.venvs
+mkdir -p ~/.venvs
+alias mkvirtualenv='pyenv virtualenvwrapper && mkvirtualenv'
+alias workon='pyenv virtualenvwrapper && workon'
+
+# pyenv
+export PATH="/home/nsiow/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# monitors
+alias xrandr-home='xrandr --auto && xrandr --output HDMI-2 --right-of eDP-1'
+alias xrandr-focus='xrandr --auto && xrandr --output eDP-1 --off'
+
+# vim
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+alias v='nvim'
+alias ev='nvim ~/.config/nvim/init.vim'
+
+# recall
+function save {
+    history | tail -1 | cut -c 8- | recall $@    
+}
+alias edit-recall='nvim ~/.config/recall/recall.ini'
+
+# keyboard
+setxkbmap -layout us -option ctrl:nocaps
+
+# soundcheck
+alias soundcheck='espeak <<< soundcheck'
+
+# vim readline
+# bindkey -v
+
+# deal with screenshots
+function open-last-screenshot() {
+    xdg-open $(find ~/Pictures/screenshots | tail -1)
+}
+
+function last-screenshot() {
+    find ~/Pictures/screenshots | tail -1
+}

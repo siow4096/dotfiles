@@ -1,0 +1,7 @@
+{
+    "go.completeUnimported": true,
+    "python.jediEnabled": false,
+    "python.pythonPath": "/home/nsiow/.venvs/neovim/bin/python3",
+    "python.linting.mypyEnabled": true,
+    "python.formatting.provider": "autopep8"
+}
