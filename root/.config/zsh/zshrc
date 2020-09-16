@@ -1,0 +1,5 @@
+for f in ~/.config/zsh/*.zsh ; do
+    if [ -f "$f" ] ; then
+        . "$f"
+    fi
+done

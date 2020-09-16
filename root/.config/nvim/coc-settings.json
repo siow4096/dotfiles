@@ -1,5 +1,5 @@
 {
-    "go.completeUnimported": true,
+    "coc.preferences.previewAutoClose": true,
     "python.jediEnabled": false,
     "python.pythonPath": "/home/nsiow/.venvs/neovim/bin/python3",
     "python.linting.mypyEnabled": true,

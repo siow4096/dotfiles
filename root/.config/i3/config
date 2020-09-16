@@ -58,8 +58,12 @@ bindsym $mod+d exec dmenu_run
 # change focus
 bindsym $mod+j focus down
 bindsym $mod+k focus up
-bindsym $mod+l focus left
-bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+l focus right
+# bindsym $mod+j focus down
+# bindsym $mod+k focus up
+# bindsym $mod+l focus left
+# bindsym $mod+semicolon focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -80,7 +84,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+Shift+v split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -234,3 +238,13 @@ bindsym $mod+Tab workspace back_and_forth
 
 # Enable redshift
 exec --no-startup-id /usr/bin/redshift
+
+# Gapz
+# Activate smart borders (always)
+smart_borders on
+for_window [class="^.*"] border pixel 0
+gaps inner 10
+gaps outer 10
+
+# Background
+exec --no-startup-id 'wal -i ~/.desktops'

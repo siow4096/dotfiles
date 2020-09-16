@@ -1,4 +1,40 @@
 " ------------------------------------------------------------
+" Plugins
+" ------------------------------------------------------------
+
+call plug#begin('~/.config/nvim/plugged')
+
+Plug 'Chiel92/vim-autoformat'
+Plug 'SkyLeach/pudb.vim'
+Plug 'Townk/vim-autoclose'
+Plug 'dense-analysis/ale'
+Plug 'fatih/vim-go'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'luochen1990/rainbow'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'nvie/vim-flake8'
+Plug 'scrooloose/nerdtree'
+Plug 'sebdah/vim-delve'
+Plug 'tpope/vim-commentary'
+" Plug 'vim-syntastic/syntastic'
+
+call plug#end()
+
+" ------------------------------------------------------------
+" Plugin Settings (that need to occur before ftplugins)
+" ------------------------------------------------------------
+
+let g:go_doc_keywordprg_enabled = 0
+let g:rainbow_active = 1
+
+let g:ale_linters = {'go': ['govet', 'golangci-lint']}
+let g:ale_go_golangci_lint_package = 1
+let g:ale_go_golangci_lint_options = '--enable-all -D gci -D gofumpt -D godox -D goerr113 -D nlreturn'
+let g:ale_open_list = 1
+
+" ------------------------------------------------------------
 " The Basics
 " ------------------------------------------------------------
 
@@ -30,14 +66,31 @@ set nu
 set relativenumber
 
 " Easier newline insertion
-nnoremap <CR> o<Esc>
+" nnoremap <CR> o<Esc>
 
-" Easier escaping
-" inoremap jk <Esc>
-" inoremap kj <Esc>
+" Clipboard operations
+nmap D "+d
+nmap Y "+y
+
+" Faster navigation
+nnoremap J 25j
+nnoremap K 25k
 
 " Reload vim without quitting
 command! -nargs=0 Source :source $MYVIMRC
+
+" ------------------------------------------------------------
+" Syntastic stuff
+" ------------------------------------------------------------
+
+ "set statusline+=%#warningmsg#
+ "set statusline+=%{SyntasticStatuslineFlag()}
+ "set statusline+=%*
+ "
+ "let g:syntastic_always_populate_loc_list = 1
+ "let g:syntastic_auto_loc_list = 1
+ "let g:syntastic_check_on_open = 1
+ "let g:syntastic_check_on_wq = 0
 
 " ------------------------------------------------------------
 " COC stuff
@@ -110,8 +163,8 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" Use sd to show documentation in preview window.
+nmap <silent> sd :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -227,25 +280,6 @@ let g:python3_host_prog='/home/nsiow/.venvs/neovim/bin/python'
 "   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
 "   execfile(activate_this, dict(__file__=activate_this))
 " EOF
-
-" ------------------------------------------------------------
-" Plugins
-" ------------------------------------------------------------
-
-call plug#begin('~/.config/nvim/plugged')
-
-Plug 'Chiel92/vim-autoformat'
-Plug 'SkyLeach/pudb.vim'
-Plug 'fatih/vim-go'
-Plug 'junegunn/vim-easy-align'
-Plug 'kien/ctrlp.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'nvie/vim-flake8'
-Plug 'scrooloose/nerdtree'
-Plug 'vim-syntastic/syntastic'
-Plug 'sebdah/vim-delve'
-
-call plug#end()
 
 " ------------------------------------------------------------
 " Keybinds

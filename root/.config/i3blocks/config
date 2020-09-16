@@ -25,7 +25,7 @@
 # The top properties below are applied to every block, but can be overridden.
 # Each block command defaults to the script name to avoid boilerplate.
 # Change $SCRIPT_DIR to the location of your scripts!
-SCRIPT_DIR=~~/.config/i3blocks-contrib
+# SCRIPT_DIR=~/.config/i3blocks-contrib
 command=$SCRIPT_DIR/$BLOCK_NAME
 separator_block_width=15
 markup=none
@@ -158,7 +158,7 @@ interval=5
 #signal=11
 
 [volume-pulseaudio]
-command=$SCRIPT_DIR/volume-pulseaudio/volume-pulseaudio
+command=~/.config/i3blocks-contrib/volume-pulseaudio/volume-pulseaudio
 interval=once
 signal=1
 #MIXER=[determined automatically]

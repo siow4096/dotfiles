@@ -103,13 +103,14 @@ mkdir -p ~/src
 alias src='cd ~/src'
 
 # i3 aliases
+alias e3='nvim ~/.config/i3/config'
 alias lock='i3lock -c000000'
 alias go2sleep='i3lock -c000000 && systemctl suspend'
 alias nosleep='xset s off && xset -dpms'
 
 # Handling profiles
-alias ep='vim ~/.zshrc'
-alias sp='source ~/.zshrc'
+alias ep="vim ${DOTFILES}/root/.config/zsh/base.zsh"
+alias sp="source ${DOTFILES}/root/.config/zsh/zshrc"
 
 # Copy/Paste
 alias c='xclip -selection clipboard'
@@ -141,7 +142,8 @@ alias xrandr-focus='xrandr --auto && xrandr --output eDP-1 --off'
 # vim
 export VISUAL=nvim
 export EDITOR="$VISUAL"
-alias v='nvim'
+alias v='nvim $(fzf --height 40% --reverse)'
+alias vv='nvim'
 alias ev='nvim ~/.config/nvim/init.vim'
 
 # recall
@@ -167,3 +169,11 @@ function open-last-screenshot() {
 function last-screenshot() {
     find ~/Pictures/screenshots | tail -1
 }
+
+# fix widgets
+TRAPWINCH() {
+  zle && { zle reset-prompt; zle -R }
+}
+
+# wal
+alias cbs='wal -i ~/.config/desktops --saturate 0.5'

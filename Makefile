@@ -1,56 +1,25 @@
 # ------------------------------------------------------------
-# Installation
+# dotfiles
 # ------------------------------------------------------------
 
 
-.DEFAULT_GOAL = install
+.DEFAULT_GOAL  = install
 
 
 .PHONY: install
-install: install-conf-zsh install-conf-vim install-conf-i3
+install: install-config install-zshrc
 
 
-# ------------------------------------------------------------
-# zsh
-# ------------------------------------------------------------
+.PHONY: install-config
+install-config:
+	ln -sf $(CURDIR)/root/.config/* ~/.config
 
 
-.PHONY: install-conf-zsh
-install-conf-zsh: ~/.zshrc
+.PHONY: install-zshrc
+install-zshrc:
+	ln -sf $(CURDIR)/root/.config/zsh/zshrc ~/.zshrc
 
 
-~/.zshrc: zsh/zshrc
-	ln -s $(abspath $<) $@
-
-
-# ------------------------------------------------------------
-# vim
-# ------------------------------------------------------------
-
-
-.PHONY: install-conf-vim
-install-conf-vim: ~/.config/nvim
-
-
-~/.config/nvim: vim/nvim
-	mkdir -p $(dir $@)
-	ln -s $(abspath $<) ~/.config
-
-
-# ------------------------------------------------------------
-# i3
-# ------------------------------------------------------------
-
-
-.PHONY: install-conf-i3
-install-conf-i3: ~/.config/i3 ~/.config/i3blocks
-
-
-~/.config/i3: i3/i3
-	mkdir -p $(dir $@)
-	ln -s $(abspath $<) ~/.config
-
-
-~/.config/i3blocks: i3/i3blocks
-	mkdir -p $(dir $@)
-	ln -s $(abspath $<) ~/.config
+.PHONY: tree
+tree: root
+	@tree -L 4 -a $<

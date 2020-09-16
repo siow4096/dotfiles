@@ -2,4 +2,4 @@
 scripts/
 
 # The `plugged` directory will be filled with plugin-specific things
-vim/nvim/plugged
+*plugged*
